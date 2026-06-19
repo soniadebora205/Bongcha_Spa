@@ -4,8 +4,14 @@ import 'paket_bottom_sheet.dart';
 
 class PaketCard extends StatelessWidget {
   final PaketSpa paket;
+  final bool isSelected;
+  final VoidCallback onToggle;
 
-  const PaketCard({super.key, required this.paket});
+  const PaketCard({
+    super.key, required this.paket, 
+    required this.isSelected, 
+    required this.onToggle,
+    });
 
   String _formatHarga(int harga) {
     String hargaStr = harga.toString();
@@ -26,7 +32,11 @@ class PaketCard extends StatelessWidget {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => PaketBottomSheet(paket: paket),
+      builder: (context) => PaketBottomSheet(
+        paket: paket,
+        isSelected: isSelected,
+        onToggle: onToggle,
+      ),
     );
   }
 
@@ -133,22 +143,23 @@ class PaketCard extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: SizedBox(
                       height: 32,
-                      child: ElevatedButton(
-                        onPressed: () => _showBottomSheet(context),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFD4956A),
-                          foregroundColor: Colors.white,
-                          elevation: 0,
-                          padding: const EdgeInsets.symmetric(horizontal: 18),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
+                        child: ElevatedButton(
+                          onPressed: onToggle,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: isSelected
+                                ? const Color(0xFF2C1810)
+                                : const Color(0xFFD4956A),
+                            foregroundColor: Colors.white,
+                            elevation: 0,
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                           ),
-                        ),
-                        child: const Text(
-                          'Pilih paket',
-                          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-                        ),
-                      ),
+                            child: Text(
+                              isSelected ? 'Batalkan Pilihan' : 'Pilih Paket',
+                              style: const TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.w600, letterSpacing: 0.3),
+                            ),
+                          ),
                     ),
                   ),
                 ],

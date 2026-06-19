@@ -1,10 +1,30 @@
 import 'package:flutter/material.dart';
 import '../models/paket_spa.dart';
 
-class PaketBottomSheet extends StatelessWidget {
+class PaketBottomSheet extends StatefulWidget {
   final PaketSpa paket;
+  final bool isSelected;
+  final VoidCallback onToggle;
 
-  const PaketBottomSheet({super.key, required this.paket});
+  const PaketBottomSheet({
+    super.key,
+    required this.paket,
+    required this.isSelected,
+    required this.onToggle,
+  });
+
+  @override
+  State<PaketBottomSheet> createState() => _PaketBottomSheetState();
+}
+
+class _PaketBottomSheetState extends State<PaketBottomSheet> {
+  late bool _isSelected;
+
+  @override
+  void initState() {
+    super.initState();
+    _isSelected = widget.isSelected;
+  }
 
   String _formatHarga(int harga) {
     String hargaStr = harga.toString();
@@ -48,7 +68,7 @@ class PaketBottomSheet extends StatelessWidget {
           // Judul paket
           Center(
             child: Text(
-              paket.nama,
+              widget.paket.nama,           // ← pakai widget.paket
               style: const TextStyle(
                 fontFamily: 'Serif',
                 fontSize: 32,
@@ -69,27 +89,18 @@ class PaketBottomSheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          ...paket.rincianTreatment.map(
+          ...widget.paket.rincianTreatment.map(   // ← widget.paket
             (item) => Padding(
               padding: const EdgeInsets.only(bottom: 4),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    '✓ ',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Color(0xFF1C1C1C),
-                    ),
-                  ),
+                  const Text('✓ ',
+                      style: TextStyle(fontSize: 14, color: Color(0xFF1C1C1C))),
                   Expanded(
-                    child: Text(
-                      item,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFF1C1C1C),
-                      ),
-                    ),
+                    child: Text(item,
+                        style: const TextStyle(
+                            fontSize: 14, color: Color(0xFF1C1C1C))),
                   ),
                 ],
               ),
@@ -99,57 +110,47 @@ class PaketBottomSheet extends StatelessWidget {
 
           // Durasi & Harga
           Text(
-            'Durasi : ${paket.durasi} menit',
+            'Durasi : ${widget.paket.durasi} menit',   // ← widget.paket
             style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF1C1C1C),
-            ),
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1C1C1C)),
           ),
           const SizedBox(height: 4),
           Text(
-            'Harga : ${_formatHarga(paket.harga)}',
+            'Harga : ${_formatHarga(widget.paket.harga)}',  // ← widget.paket
             style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF1C1C1C),
-            ),
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF1C1C1C)),
           ),
           const SizedBox(height: 24),
 
-          // Tombol Pilih Paket
+          // Tombol Pilih / Batalkan Paket
           SizedBox(
             width: double.infinity,
             height: 52,
             child: ElevatedButton(
               onPressed: () {
+                setState(() => _isSelected = !_isSelected);
+                widget.onToggle();
                 Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Paket "${paket.nama}" berhasil dipilih!'),
-                    backgroundColor: const Color(0xFFD4956A),
-                    behavior: SnackBarBehavior.floating,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFD4956A),
+                backgroundColor: _isSelected
+                    ? const Color(0xFF2C1810)
+                    : const Color(0xFFD4956A),
                 foregroundColor: Colors.white,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
+                    borderRadius: BorderRadius.circular(12)),
               ),
-              child: const Text(
-                'Pilih paket',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0.3,
-                ),
+              child: Text(
+                _isSelected ? 'Batalkan Pilihan' : 'Pilih Paket',
+                style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.3),
               ),
             ),
           ),

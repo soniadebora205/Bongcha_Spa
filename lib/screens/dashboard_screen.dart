@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 import '../data/paket_data.dart';
 import '../widgets/paket_card.dart';
 import '../widgets/layanan_card.dart';
+import '../models/paket_spa.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
+  final List<PaketSpa> selectedPaket;
+  final Function(PaketSpa) onToggle;
+
+  const DashboardScreen({
+    super.key,
+    required this.selectedPaket,
+    required this.onToggle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +46,11 @@ class DashboardScreen extends StatelessWidget {
                   const SizedBox(height: 14),
 
                   // List Korean Spa Package
-                  ...paketKorean.map((paket) => PaketCard(paket: paket)),
+                  ...paketKorean.map((paket) => PaketCard(
+                        paket: paket,
+                        isSelected: selectedPaket.any((p) => p.id == paket.id),
+                        onToggle: () => onToggle(paket),
+                      )),
 
                   const SizedBox(height: 8),
 
@@ -54,8 +66,11 @@ class DashboardScreen extends StatelessWidget {
                   const SizedBox(height: 14),
 
                   // List Layanan Lainnya
-                  ...layananLainnya.map((paket) => LayananCard(paket: paket)),
-
+                  ...layananLainnya.map((paket) => LayananCard(
+                    paket: paket, 
+                    isSelected: selectedPaket.any((p) => p.id == paket.id),
+                    onToggle: () => onToggle(paket),
+                  )),
                   const SizedBox(height: 20),
                 ],
               ),

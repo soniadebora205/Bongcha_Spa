@@ -4,8 +4,15 @@ import 'paket_bottom_sheet.dart';
 
 class LayananCard extends StatelessWidget {
   final PaketSpa paket;
+  final bool isSelected;
+  final VoidCallback onToggle;
 
-  const LayananCard({super.key, required this.paket});
+  const LayananCard({
+    super.key, 
+    required this.paket,
+    required this.isSelected,
+    required this.onToggle,
+  });
 
   String _formatHarga(int harga) {
     String hargaStr = harga.toString();
@@ -41,7 +48,11 @@ class LayananCard extends StatelessWidget {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => PaketBottomSheet(paket: paket),
+      builder: (context) => PaketBottomSheet(
+        paket: paket, 
+        isSelected: isSelected,
+        onToggle: onToggle,
+      ),
     );
   }
 
@@ -115,9 +126,9 @@ class LayananCard extends StatelessWidget {
           SizedBox(
             height: 32,
             child: ElevatedButton(
-              onPressed: () => _showBottomSheet(context),
+              onPressed: onToggle,
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFD4956A),
+                backgroundColor: isSelected? const Color(0xFF2C1810) : const Color(0xFFD4956A),
                 foregroundColor: Colors.white,
                 elevation: 0,
                 padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -125,8 +136,8 @@ class LayananCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              child: const Text(
-                'Pilih paket',
+              child: Text(
+                isSelected ? 'Dipilih' : 'Pilih Paket',
                 style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
               ),
             ),
