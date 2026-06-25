@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/paket_spa.dart';
+import 'kode_reservasi_screen.dart';
 
 /// Model sederhana untuk item add-on.
 class AddOnItem {
@@ -105,36 +106,59 @@ class _FormDataDiriScreenState extends State<FormDataDiriScreen> {
     };
   }
 
-  void _submit() {
-    if (!_formKey.currentState!.validate()) return;
+void _submit() {
+  if (!_formKey.currentState!.validate()) return;
 
-    final payload = _buildPayload();
+  final payload = _buildPayload();
+  debugPrint(payload.toString()); // TODO: kirim ke Supabase
 
-    // TODO: kirim payload ke Supabase, contoh:
-    // await supabase.from('reservasi').insert(payload);
+  // Gabung nama paket jika lebih dari satu
+  final namaPaket = widget.selectedPaket.map((p) => p.nama).join(' + ');
+  
+  // Generate kode sekali di sini supaya tidak berubah
+  final kode = KodeReservasiScreen.generateKode();
 
-    // TODO: navigasi ke halaman Pembayaran, bawa payload + totalKeseluruhan
-    debugPrint(payload.toString());
+  if (_metodePembayaran == 'tunai') {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => KodeReservasiScreen(
+          status: StatusPembayaran.menunggu,
+          namaCustomer: _namaController.text.trim(),
+          tanggalRelaksasi: _tanggalFormatted,
+          waktu: widget.selectedWaktu,
+          jumlahTamu: widget.jumlahTamu,
+          namaPaket: namaPaket,
+          totalHarga: _totalKeseluruhan,
+          metodePembayaran: 'Tunai (bayar di tempat)',
+          kodeReservasi: kode,
+        ),
+      ),
+    );
+  } else {
+    // TODO: navigasi ke halaman barcode QRIS dulu
+    // Navigator.push(context, MaterialPageRoute(builder: (_) => QrisScreen(...)));
   }
+}
 
   // ─── Build ─────────────────────────────────────────────────────────────────
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFCDC2B6),
+      backgroundColor: const Color(0xFFC1BAB4),
       appBar: AppBar(
         title: const Text(
           'FORM DATA DIRI',
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             letterSpacing: 1.5,
           ),
         ),
         centerTitle: true,
-        backgroundColor: const Color(0xFFE9E3DA),
-        foregroundColor: const Color(0xFF1C1C1C),
+        backgroundColor: const Color(0xFFD9D9D9),
+        foregroundColor: const Color(0xFF1E1E1E),
         elevation: 0,
       ),
       body: Form(
@@ -275,7 +299,7 @@ class _FormDataDiriScreenState extends State<FormDataDiriScreen> {
                   onPressed: _submit,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFD4956A),
-                    foregroundColor: Colors.white,
+                    foregroundColor: const Color(0xFF411E19),
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
@@ -283,7 +307,7 @@ class _FormDataDiriScreenState extends State<FormDataDiriScreen> {
                   ),
                   child: const Text(
                     'Konfirmasi',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -303,7 +327,7 @@ class _FormDataDiriScreenState extends State<FormDataDiriScreen> {
       style: const TextStyle(
         fontSize: 15,
         fontWeight: FontWeight.w600,
-        color: Color(0xFF1C1C1C),
+        color: Color(0xFF1E1E1E),
       ),
     );
   }
@@ -325,19 +349,19 @@ class _FormDataDiriScreenState extends State<FormDataDiriScreen> {
         hintText: hint,
         hintStyle: const TextStyle(color: Color(0xFFB8A98C)),
         filled: true,
-        fillColor: const Color(0xFFFBEFD4),
+        fillColor: const Color(0xFFFFF3DB),
         contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: const Color(0xFFE8D6A8)),
+          borderSide: BorderSide(color: const Color(0xFFFFF3DB)),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: const Color(0xFFE8D6A8)),
+          borderSide: BorderSide(color: const Color(0xFFFFF3DB)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xFFD4956A), width: 1.5),
+          borderSide: const BorderSide(color: Color(0xFF675443), width: 0.5),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -363,7 +387,7 @@ class _FormDataDiriScreenState extends State<FormDataDiriScreen> {
               height: 20,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: const Color(0xFFD4956A), width: 1.5),
+                border: Border.all(color: const Color(0xFFE7A372), width: 1.5),
               ),
               child: selected
                   ? Center(
@@ -372,14 +396,14 @@ class _FormDataDiriScreenState extends State<FormDataDiriScreen> {
                         height: 11,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Color(0xFFD4956A),
+                          color: Color(0xFFE7A372),
                         ),
                       ),
                     )
                   : null,
             ),
             const SizedBox(width: 10),
-            Text(label, style: const TextStyle(fontSize: 14, color: Color(0xFF1C1C1C))),
+            Text(label, style: const TextStyle(fontSize: 14, color: Color(0xFF1E1E1E))),
           ],
         ),
       ),
@@ -405,15 +429,15 @@ class _FormDataDiriScreenState extends State<FormDataDiriScreen> {
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 borderRadius: BorderRadius.circular(5),
-                color: selected ? const Color(0xFFD4956A) : Colors.transparent,
-                border: Border.all(color: const Color(0xFFD4956A), width: 1.5),
+                color: selected ? const Color(0xFFE7A372) : Colors.transparent,
+                border: Border.all(color: const Color(0xFFE7A372), width: 1.5),
               ),
               child: selected
                   ? const Icon(Icons.check, size: 14, color: Colors.white)
                   : null,
             ),
             const SizedBox(width: 10),
-            Text(label, style: const TextStyle(fontSize: 14, color: Color(0xFF1C1C1C))),
+            Text(label, style: const TextStyle(fontSize: 14, color: Color(0xFF1E1E1E))),
           ],
         ),
       ),

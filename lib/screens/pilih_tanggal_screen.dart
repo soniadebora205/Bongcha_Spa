@@ -52,8 +52,7 @@ class _PilihTanggalScreenState extends State<PilihTanggalScreen> {
     return 'Rp. $result';
   }
 
-  /// Membangun list tanggal untuk grid kalender.
-  /// - null  → sel kosong (sebelum hari ke-1)
+
   /// - bulan berbeda → tanggal bulan berikutnya (ditampilkan abu-abu)
   List<DateTime?> _buildCalendarDays() {
     final firstDay = DateTime(_focusedMonth.year, _focusedMonth.month, 1);
@@ -90,19 +89,19 @@ class _PilihTanggalScreenState extends State<PilihTanggalScreen> {
     final calendarDays = _buildCalendarDays();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFEFEBE4),
+      backgroundColor: const Color(0xFFC1BAB4),
       appBar: AppBar(
         title: const Text(
-          'Pilih Tanggal',
+          'PILIH TANGGAL',
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             letterSpacing: 1.5,
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.white,
-        foregroundColor: const Color(0xFF1C1C1C),
+        backgroundColor: const Color(0xFFD9D9D9),
+        foregroundColor: const Color(0xFF1E1E1E),
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -157,7 +156,7 @@ class _PilihTanggalScreenState extends State<PilihTanggalScreen> {
                   backgroundColor: const Color(0xFFD4956A),
                   disabledBackgroundColor:
                       const Color(0xFFD4956A).withOpacity(0.45),
-                  foregroundColor: Colors.white,
+                  foregroundColor: const Color(0xFF411E19),
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
@@ -165,7 +164,7 @@ class _PilihTanggalScreenState extends State<PilihTanggalScreen> {
                 ),
                 child: const Text(
                   'Konfirmasi',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -218,7 +217,7 @@ class _PilihTanggalScreenState extends State<PilihTanggalScreen> {
                   style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
-                      color: Color(0xFFD4956A))),
+                      color: Color(0xFFE7A372))),
             ],
           ),
         ],
@@ -234,7 +233,7 @@ class _PilihTanggalScreenState extends State<PilihTanggalScreen> {
       style: const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w600,
-        color: Color(0xFF1C1C1C),
+        color: Color(0xFF1E1E1E),
       ),
     );
   }
@@ -265,7 +264,7 @@ class _PilihTanggalScreenState extends State<PilihTanggalScreen> {
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF1C1C1C),
+                  color: Color(0xFF1E1E1E),
                 ),
               ),
             ),
@@ -287,7 +286,7 @@ class _PilihTanggalScreenState extends State<PilihTanggalScreen> {
         width: 48,
         height: 48,
         decoration: const BoxDecoration(
-          color: Color(0xFF2C1810),
+          color: Color(0xFF675443),
           shape: BoxShape.circle,
         ),
         child: Icon(icon, color: Colors.white, size: 22),
@@ -326,7 +325,7 @@ class _PilihTanggalScreenState extends State<PilihTanggalScreen> {
                 child: const Padding(
                   padding: EdgeInsets.all(8),
                   child: Icon(Icons.chevron_left,
-                      size: 20, color: Color(0xFF1C1C1C)),
+                      size: 20, color: Color(0xFF1E1E1E)),
                 ),
               ),
 
@@ -339,7 +338,7 @@ class _PilihTanggalScreenState extends State<PilihTanggalScreen> {
                       style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFF1C1C1C)),
+                          color: Color(0xFF1E1E1E)),
                       icon: const Icon(Icons.keyboard_arrow_down, size: 18),
                       items: List.generate(
                         12,
@@ -363,7 +362,7 @@ class _PilihTanggalScreenState extends State<PilihTanggalScreen> {
                       style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFF1C1C1C)),
+                          color: Color(0xFF1E1E1E)),
                       icon: const Icon(Icons.keyboard_arrow_down, size: 18),
                       items: List.generate(
                         5,
@@ -392,7 +391,7 @@ class _PilihTanggalScreenState extends State<PilihTanggalScreen> {
                 child: const Padding(
                   padding: EdgeInsets.all(8),
                   child: Icon(Icons.chevron_right,
-                      size: 20, color: Color(0xFF1C1C1C)),
+                      size: 20, color: Color(0xFF1E1E1E)),
                 ),
               ),
             ],
@@ -454,7 +453,7 @@ class _PilihTanggalScreenState extends State<PilihTanggalScreen> {
         margin: const EdgeInsets.symmetric(vertical: 2),
         decoration: isSelected
             ? BoxDecoration(
-                color: const Color(0xFFD4956A).withOpacity(0.28),
+                color: const Color(0xFFEFDEC0).withOpacity(0.28),
                 borderRadius: BorderRadius.circular(8),
               )
             : null,
@@ -469,7 +468,7 @@ class _PilihTanggalScreenState extends State<PilihTanggalScreen> {
                   ? const Color(0xFFCCCCCC)         // abu-abu → bulan lain
                   : isSelected
                       ? const Color(0xFF8B5E3C)     // coklat → dipilih
-                      : const Color(0xFF1C1C1C),    // hitam  → normal
+                      : const Color(0xFF1E1E1E),    // hitam  → normal
             ),
           ),
         ),
@@ -499,12 +498,12 @@ class _PilihTanggalScreenState extends State<PilihTanggalScreen> {
           child: Container(
             decoration: BoxDecoration(
               color: isSelected
-                  ? const Color(0xFFD4956A).withOpacity(0.28)
+                  ? const Color(0xFFEFDEC0).withOpacity(0.28)
                   : Colors.white,
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                 color: isSelected
-                    ? const Color(0xFFD4956A)
+                    ? const Color(0xFFEFDEC0)
                     : Colors.grey.shade200,
               ),
             ),
@@ -517,7 +516,7 @@ class _PilihTanggalScreenState extends State<PilihTanggalScreen> {
                       isSelected ? FontWeight.w700 : FontWeight.normal,
                   color: isSelected
                       ? const Color(0xFF8B5E3C)
-                      : const Color(0xFF1C1C1C),
+                      : const Color(0xFF1E1E1E),
                 ),
               ),
             ),

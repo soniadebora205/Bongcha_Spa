@@ -18,7 +18,7 @@ class PaketData {
           'Face relax Bong Cha',
           'Cuci rambut',
         ],
-        imagePath: 'assets/images/7_in_one.png',
+        imagePath: 'assets/images/package_7_in_one.png',
         isKoreanPackage: true,
       ),
       PaketSpa(
@@ -34,7 +34,7 @@ class PaketData {
           'Mandi susu',
           'Cuci rambut',
         ],
-        imagePath: 'assets/images/for_kids.png',
+        imagePath: 'assets/images/package_for_kids.png',
         isKoreanPackage: true,
       ),
       PaketSpa(
@@ -52,7 +52,7 @@ class PaketData {
           'Face relax Bong Cha',
           'Cuci rambut',
         ],
-        imagePath: 'assets/images/for_brides.png',
+        imagePath: 'assets/images/package_for_brides.png',
         isKoreanPackage: true,
       ),
     ];

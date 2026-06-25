@@ -68,12 +68,12 @@ class _PaketBottomSheetState extends State<PaketBottomSheet> {
           // Judul paket
           Center(
             child: Text(
-              widget.paket.nama,           // ← pakai widget.paket
+              widget.paket.nama,
               style: const TextStyle(
                 fontFamily: 'Serif',
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF1C1C1C),
+                color: Color(0xFF1E1E1E),
               ),
             ),
           ),
@@ -85,22 +85,22 @@ class _PaketBottomSheetState extends State<PaketBottomSheet> {
             style: TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF1C1C1C),
+              color: Color(0xFF1E1E1E),
             ),
           ),
           const SizedBox(height: 8),
-          ...widget.paket.rincianTreatment.map(   // ← widget.paket
+          ...widget.paket.rincianTreatment.map(
             (item) => Padding(
               padding: const EdgeInsets.only(bottom: 4),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text('✓ ',
-                      style: TextStyle(fontSize: 14, color: Color(0xFF1C1C1C))),
+                      style: TextStyle(fontSize: 14, color: Color(0xFF1E1E1E))),
                   Expanded(
                     child: Text(item,
                         style: const TextStyle(
-                            fontSize: 14, color: Color(0xFF1C1C1C))),
+                            fontSize: 14, color: Color(0xFF1E1E1E))),
                   ),
                 ],
               ),
@@ -110,19 +110,19 @@ class _PaketBottomSheetState extends State<PaketBottomSheet> {
 
           // Durasi & Harga
           Text(
-            'Durasi : ${widget.paket.durasi} menit',   // ← widget.paket
+            'Durasi : ${widget.paket.durasi} menit',
             style: const TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF1C1C1C)),
+                color: Color(0xFF1E1E1E)),
           ),
           const SizedBox(height: 4),
           Text(
-            'Harga : ${_formatHarga(widget.paket.harga)}',  // ← widget.paket
+            'Harga : ${_formatHarga(widget.paket.harga)}',
             style: const TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF1C1C1C)),
+                color: Color(0xFF1E1E1E)),
           ),
           const SizedBox(height: 24),
 
@@ -140,7 +140,7 @@ class _PaketBottomSheetState extends State<PaketBottomSheet> {
                 backgroundColor: _isSelected
                     ? const Color(0xFF2C1810)
                     : const Color(0xFFD4956A),
-                foregroundColor: Colors.white,
+                foregroundColor: const Color(0xFFffffff),
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12)),
@@ -148,7 +148,7 @@ class _PaketBottomSheetState extends State<PaketBottomSheet> {
               child: Text(
                 _isSelected ? 'Batalkan Pilihan' : 'Pilih Paket',
                 style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 20,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 0.3),
               ),

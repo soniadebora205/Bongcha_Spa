@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/halaman.dart';
+import 'package:google_fonts/google_fonts.dart'; // Pastikan ini tetap di-import
 
 void main() {
   runApp(const BongchaSpaApp());
@@ -20,10 +21,14 @@ class BongchaSpaApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: const Color(0xFFEFEBE4),
         useMaterial3: true,
-        fontFamily: 'Merriweather', // fallback ke default jika belum ditambahkan
+
+        textTheme: GoogleFonts.playfairDisplayTextTheme(
+          ThemeData.light().textTheme,
+        ),
+
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.white,
-          foregroundColor: Color(0xFF1C1C1C),
+          foregroundColor: Color(0xFF1E1E1E),
           elevation: 0,
         ),
       ),

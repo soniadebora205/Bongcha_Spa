@@ -91,7 +91,7 @@ class _HalamanState extends State<Halaman> {
                     style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
-                        color: Color(0xFFD4956A))),
+                        color: Color(0xFFE7A372))),
               ],
             ),
             const SizedBox(height: 20),
@@ -112,8 +112,8 @@ class _HalamanState extends State<Halaman> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFD4956A),
-                  foregroundColor: Colors.white,
+                  backgroundColor: const Color(0xFFE7A372),
+                  foregroundColor: const Color(0xFF411E19),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12)),
                 ),

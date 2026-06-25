@@ -28,18 +28,20 @@ class LayananCard extends StatelessWidget {
     return 'Rp. $result';
   }
 
-  IconData _getIcon(String? iconName) {
+  String? _getImagePath(String? iconName) {
     switch (iconName) {
       case 'creambath':
-        return Icons.brush; // sisir / creambath
+        return 'assets/images/Creambath icon.png';
       case 'creambath_sauna':
-        return Icons.hot_tub;
+        return 'assets/images/Creambath + Sauna.png';
       case 'pijat':
-        return Icons.self_improvement;
+        return 'assets/images/Massage.png';
+      case 'pijat_scrub':
+        return 'assets/images/Massage + Scrub.png';
       case 'sauna':
-        return Icons.local_fire_department;
+        return 'assets/images/Sauna.png';
       default:
-        return Icons.spa;
+        return null;
     }
   }
 
@@ -78,17 +80,27 @@ class LayananCard extends StatelessWidget {
           Container(
             width: 50,
             height: 50,
+            clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
-              color: const Color(0xFFF5F0EB),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.white,
             ),
-            child: Icon(
-              _getIcon(paket.iconName),
-              size: 28,
-              color: const Color(0xFF2C1810),
-            ),
+            child: _getImagePath(paket.iconName) != null
+                ? Image.asset(
+                    _getImagePath(paket.iconName)!,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => const Icon(
+                      Icons.spa,
+                      size: 28,
+                      color: Color(0xFF2C1810),
+                    ),
+                  )
+                  : const Icon(
+                    Icons.spa,
+                    size: 28,
+                    color: Color(0xFF2C1810),
+                  ),
           ),
-          const SizedBox(width: 14),
 
           // Info
           Expanded(
@@ -100,10 +112,10 @@ class LayananCard extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF1C1C1C),
+                    color: Color(0xFF1E1E1E),
                   ),
                 ),
-                const SizedBox(height: 2),
+                const SizedBox(width: 14),
                 Text(
                   'Durasi : ${paket.durasi} menit',
                   style: const TextStyle(
@@ -128,17 +140,21 @@ class LayananCard extends StatelessWidget {
             child: ElevatedButton(
               onPressed: onToggle,
               style: ElevatedButton.styleFrom(
-                backgroundColor: isSelected? const Color(0xFF2C1810) : const Color(0xFFD4956A),
-                foregroundColor: Colors.white,
+                backgroundColor: isSelected 
+                    ? const Color(0xFF2C1810) 
+                    : const Color(0xFFE7A372),
+                foregroundColor: isSelected 
+                    ? Colors.white 
+                    : const Color(0xFF411E19),
                 elevation: 0,
                 padding: const EdgeInsets.symmetric(horizontal: 14),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(18),
                 ),
               ),
               child: Text(
-                isSelected ? 'Dipilih' : 'Pilih Paket',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                isSelected ? 'Batalkan Pilihan' : 'Pilih Paket',
+                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
               ),
             ),
           ),
